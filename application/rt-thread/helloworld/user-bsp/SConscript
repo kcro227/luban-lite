@@ -1,0 +1,28 @@
+Import('AIC_ROOT')
+Import('rtconfig')
+from building import *
+
+# 返回当前的工作目录路径，并将其赋值给变量
+cwd = GetCurrentDir()
+
+# 定义了一个列表CPPPATH，包含了当前工作目录的路径
+# 通常用于指定C/C++编译器的头文件搜索路径
+CPPPATH = [cwd]
+
+# 定义了一个空列表src，它将用于存放源文件列表
+src = []
+
+# DefineGroup是SCons的一个函数，用于创建一个构建组。
+# 这里创建了一个名为lckfb-user-bsp的组，它依赖于空字符串列表（意味着没有依赖），并且指定了CPPPATH作为头文件搜索路径。
+group = DefineGroup('lckfb-user-bsp', src, depend = [''], CPPPATH = CPPPATH)
+
+# 遍历当前目录
+# 如果找到SConscript文件，使用SConscript()函数包含该脚本，并将其结果添加到构建组中。
+list = os.listdir(cwd)
+for item in list:
+    if os.path.isfile(os.path.join(cwd, item, 'SConscript')):
+        group = group + SConscript(os.path.join(item, 'SConscript'))
+
+# 最后，使用Return函数返回构建组group。
+# 在SCons中，Return函数用于将值返回给调用脚本，这样其他脚本可以访问和使用这个构建组。
+Return('group')

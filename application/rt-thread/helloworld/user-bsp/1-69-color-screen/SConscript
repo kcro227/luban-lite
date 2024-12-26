@@ -1,0 +1,16 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+import rtconfig
+from building import *
+
+cwd = GetCurrentDir()
+CPPPATH = [cwd]
+src = []
+
+
+if GetDepend('LCKFB_1_69_COLOR_SCREEN') and GetDepend('USING_LCKFB_TRANSPLANT_CODE'):
+    src = Glob(os.path.join(cwd, '*.c'))
+
+group = DefineGroup('lckfb-1-69-color-screen', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

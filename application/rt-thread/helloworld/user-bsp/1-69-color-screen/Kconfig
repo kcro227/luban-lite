@@ -1,0 +1,6 @@
+config LCKFB_1_69_COLOR_SCREEN
+    bool "Use 1.69 inch color screen"
+    select AIC_USING_QSPI3
+    default n
+    help
+        More information is available at: https://wiki.lckfb.com/

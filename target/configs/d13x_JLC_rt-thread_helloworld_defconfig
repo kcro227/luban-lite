@@ -1030,6 +1030,12 @@ CONFIG_ULOG_USING_FILTER=y
 CONFIG_USER_LED_ON=y
 
 #
+# LCKFB Module transplant code
+#
+CONFIG_USING_LCKFB_TRANSPLANT_CODE=y
+CONFIG_LCKFB_1_69_COLOR_SCREEN=y
+
+#
 # RT-Thread online packages
 #
 

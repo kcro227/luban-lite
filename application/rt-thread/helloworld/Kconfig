@@ -1,1 +1,20 @@
+
+comment "LCKFB Module transplant code"
+
+menuconfig USING_LCKFB_TRANSPLANT_CODE
+    bool "Porting code using the LCKFB module"
+    default n
+    help
+        Official Website : www.lckfb.com
+
+# 如果使用立创开发板的模块移植代码则开启下面的选项
+if USING_LCKFB_TRANSPLANT_CODE
+
 source "application/rt-thread/helloworld/user_led/Kconfig"
+# 1.69寸彩屏
+source "application/rt-thread/helloworld/user-bsp/1-69-color-screen/Kconfig"
+
+endif # 结束
+
+
+
