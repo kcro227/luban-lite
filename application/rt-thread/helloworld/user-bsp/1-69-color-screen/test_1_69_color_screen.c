@@ -108,7 +108,7 @@ static int lcd_qspi_init(void)
     qspi_cfg.qspi_dl_width = 1;     // QSPI 总线位宽，单线模式 1 位、双线模式 2 位，4 线模式 4 位
     qspi_cfg.parent.mode = RT_SPI_MASTER | RT_SPI_MODE_2 | RT_SPI_MSB;
     qspi_cfg.parent.data_width = 8;
-    qspi_cfg.parent.max_hz = 20 * 1000 * 1000;   // 20M
+    qspi_cfg.parent.max_hz = 10 * 1000 * 1000;   // 20M
     ret = rt_qspi_configure(g_qspi, &qspi_cfg);
     if (ret < 0) 
     {
