@@ -1,0 +1,6 @@
+config LCKFB_3_7_COLOR_SCREEN
+    bool "Use 3.7 inch color screen"
+    select AIC_USING_QSPI3
+    default n
+    help
+        More information is available at: https://wiki.lckfb.com/

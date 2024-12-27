@@ -13,6 +13,8 @@ if USING_LCKFB_TRANSPLANT_CODE
 source "application/rt-thread/helloworld/user_led/Kconfig"
 # 1.69寸彩屏
 source "application/rt-thread/helloworld/user-bsp/1-69-color-screen/Kconfig"
+# 1.69寸彩屏
+source "application/rt-thread/helloworld/user-bsp/3-7-color-screen/Kconfig"
 
 endif # 结束
 
