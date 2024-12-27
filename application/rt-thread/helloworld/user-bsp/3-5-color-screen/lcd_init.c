@@ -120,8 +120,8 @@ void LCD_WR_REG(u8 dat)
 ******************************************************************************/
 void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2)
 {
-	if (USE_HORIZONTAL == 0)
-	{
+	// if (USE_HORIZONTAL == 0)
+	// {
 		LCD_WR_REG(0x2a); // 列地址设置
 		LCD_WR_DATA(x1);
 		LCD_WR_DATA(x2);
@@ -129,37 +129,37 @@ void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2)
 		LCD_WR_DATA(y1);
 		LCD_WR_DATA(y2);
 		LCD_WR_REG(0x2c); // 储存器写
-	}
-	else if (USE_HORIZONTAL == 1)
-	{
-		LCD_WR_REG(0x2a); // 列地址设置
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b); // 行地址设置
-		LCD_WR_DATA(y1 + 20);
-		LCD_WR_DATA(y2 + 20);
-		LCD_WR_REG(0x2c); // 储存器写
-	}
-	else if (USE_HORIZONTAL == 2)
-	{
-		LCD_WR_REG(0x2a); // 列地址设置
-		LCD_WR_DATA(x1 + 20);
-		LCD_WR_DATA(x2 + 20);
-		LCD_WR_REG(0x2b); // 行地址设置
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c); // 储存器写
-	}
-	else
-	{
-		LCD_WR_REG(0x2a); // 列地址设置
-		LCD_WR_DATA(x1 + 20);
-		LCD_WR_DATA(x2 + 20);
-		LCD_WR_REG(0x2b); // 行地址设置
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c); // 储存器写
-	}
+	// }
+	// else if (USE_HORIZONTAL == 1)
+	// {
+	// 	LCD_WR_REG(0x2a); // 列地址设置
+	// 	LCD_WR_DATA(x1);
+	// 	LCD_WR_DATA(x2);
+	// 	LCD_WR_REG(0x2b); // 行地址设置
+	// 	LCD_WR_DATA(y1 + 20);
+	// 	LCD_WR_DATA(y2 + 20);
+	// 	LCD_WR_REG(0x2c); // 储存器写
+	// }
+	// else if (USE_HORIZONTAL == 2)
+	// {
+	// 	LCD_WR_REG(0x2a); // 列地址设置
+	// 	LCD_WR_DATA(x1 + 20);
+	// 	LCD_WR_DATA(x2 + 20);
+	// 	LCD_WR_REG(0x2b); // 行地址设置
+	// 	LCD_WR_DATA(y1);
+	// 	LCD_WR_DATA(y2);
+	// 	LCD_WR_REG(0x2c); // 储存器写
+	// }
+	// else
+	// {
+	// 	LCD_WR_REG(0x2a); // 列地址设置
+	// 	LCD_WR_DATA(x1 + 20);
+	// 	LCD_WR_DATA(x2 + 20);
+	// 	LCD_WR_REG(0x2b); // 行地址设置
+	// 	LCD_WR_DATA(y1);
+	// 	LCD_WR_DATA(y2);
+	// 	LCD_WR_REG(0x2c); // 储存器写
+	// }
 }
 
 void LCD_Init(void)
@@ -180,11 +180,11 @@ void LCD_Init(void)
 	if (USE_HORIZONTAL == 0)
 		LCD_WR_DATA8(0x48);
 	else if (USE_HORIZONTAL == 1)
-		LCD_WR_DATA8(0xC0);
+		LCD_WR_DATA8(0x28);
 	else if (USE_HORIZONTAL == 2)
-		LCD_WR_DATA8(0x70);
+		LCD_WR_DATA8(0x88);
 	else
-		LCD_WR_DATA8(0xA0);
+		LCD_WR_DATA8(0xE8);
 
 	LCD_WR_REG(0x3A);
 	LCD_WR_DATA8(0x55); // LCD_WR_DATA(0x66);

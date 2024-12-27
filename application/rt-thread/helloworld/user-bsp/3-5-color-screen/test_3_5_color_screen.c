@@ -139,7 +139,7 @@ static void lcd_thread_entry(void *param)
         if(t >= 99.88)
             t = 0;
 
-        LCD_ShowChinese(40,0,(uint8_t *)"中电子",RED,WHITE,32,0);
+        LCD_ShowChinese(40,0,(uint8_t *)"中景园电子",RED,WHITE,32,0);
         LCD_ShowString(10,33,(uint8_t *)"LCD_W:",RED,WHITE,32,0);
         LCD_ShowIntNum(106,33,LCD_W,3,RED,WHITE,32);
         LCD_ShowString(10,66,(uint8_t *)"LCD_H:",RED,WHITE,32,0);
