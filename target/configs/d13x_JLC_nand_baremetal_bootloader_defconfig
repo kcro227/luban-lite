@@ -6,7 +6,7 @@
 #
 # Project options
 #
-CONFIG_PRJ_DEFCONFIG_FILENAME="d13x_JLC_baremetal_bootloader_defconfig"
+CONFIG_PRJ_DEFCONFIG_FILENAME="d13x_JLC_nand_baremetal_bootloader_defconfig"
 
 #
 # -- Important: If following options have been changed, you need save & rerun menuconfig before changing any other options.
