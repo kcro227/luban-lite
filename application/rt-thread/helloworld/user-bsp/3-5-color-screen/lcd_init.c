@@ -78,6 +78,51 @@ void LCD_Writ_Bus(u8 dat)
 
 	rt_spi_release_bus((struct rt_spi_device *)lcd_dev);
 }
+/******************************************************************************
+	  函数说明：LCD串行数据写入函数
+	  入口数据：dat  要写入的串行数据 lenth 发送数据的长度
+	  返回值：  无
+******************************************************************************/
+void LCD_Writ_Data_Continue(uint32_t lenth,uint8_t *dat)
+{
+	struct rt_qspi_message msg;
+
+	rt_memset(&msg, 0, sizeof(msg));
+
+	msg.instruction.content = 0;	/* 指令内容 */
+	msg.instruction.qspi_lines = 0; /* 指令模式，单线模式 1 位、双线模式 2 位，4 线模式 4 位 */
+
+	msg.alternate_bytes.content = 0;	/* 地址/交替字节 内容 */
+	msg.alternate_bytes.size = 0;		/* 地址/交替字节 长度 */
+	msg.alternate_bytes.qspi_lines = 0; /* 地址/交替字节 模式，单线模式 1 位、双线模式 2 位，4 线模式 4 位 */
+
+	msg.dummy_cycles = 0;	 /* 空指令周期阶段 */
+	msg.qspi_data_lines = 1; /*  QSPI 总线位宽 */
+
+	// 传输一条消息，开始发送数据时片选选中，函数返回时释放片选。
+	msg.parent.send_buf = dat;	   /* 发送缓冲区指针 */
+	msg.parent.recv_buf = RT_NULL; /* 接收缓冲区指针 */
+	msg.parent.length = lenth;		   /* 发送 / 接收 数据字节数 */
+	msg.parent.next = RT_NULL;	   /* 指向继续发送的下一条消息的指针 */
+	msg.parent.cs_take = 1;		   /* 片选选中 */
+	msg.parent.cs_release = 1;	   /* 释放片选 */
+	// msg.parent.
+	rt_spi_take_bus((struct rt_spi_device *)lcd_dev);
+
+	LCD_CS_Clr();
+
+	int ret = rt_qspi_transfer_message(lcd_dev, &msg);
+	;
+	if (ret != RT_NULL)
+	{
+		LOG_E("rt_qspi_transfer_message failed!! %x",ret);
+		LOG_I("mes l : %ld",lenth);
+	}
+
+	LCD_CS_Set();
+
+	rt_spi_release_bus((struct rt_spi_device *)lcd_dev);
+}
 
 /******************************************************************************
 	  函数说明：LCD写入数据
