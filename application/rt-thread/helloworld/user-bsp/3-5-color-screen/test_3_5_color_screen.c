@@ -106,9 +106,9 @@ static int lcd_qspi_init(void)
     rt_memset(&qspi_cfg, 0, sizeof(qspi_cfg));
 
     qspi_cfg.qspi_dl_width = 1;     // QSPI 总线位宽，单线模式 1 位、双线模式 2 位，4 线模式 4 位
-    qspi_cfg.parent.mode = RT_SPI_MASTER | RT_SPI_MODE_2 | RT_SPI_MSB;
+    qspi_cfg.parent.mode = RT_SPI_MASTER | RT_SPI_MODE_3 | RT_SPI_MSB;
     qspi_cfg.parent.data_width = 8;
-    qspi_cfg.parent.max_hz = 20 * 1000 * 1000;   // 20M
+    qspi_cfg.parent.max_hz = 50 * 1000 * 1000;   // 20M
     ret = rt_qspi_configure(g_qspi, &qspi_cfg);
     if (ret < 0) 
     {
@@ -162,7 +162,7 @@ static void lcd_thread_entry(void *param)
  * 作       者：LC
  * 备       注：LP
 **********************************************************/
-static int test_lckfb_3_7_color_screen(void)
+static int test_lckfb_3_5_color_screen(void)
 {
     int ret = 0;
 
@@ -202,7 +202,7 @@ static int test_lckfb_3_7_color_screen(void)
 
 
 }
-MSH_CMD_EXPORT(test_lckfb_3_7_color_screen, color screen test);
+MSH_CMD_EXPORT(test_lckfb_3_5_color_screen, color screen test);
 
 
 
