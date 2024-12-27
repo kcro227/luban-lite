@@ -1023,12 +1023,16 @@ CONFIG_ULOG_USING_FILTER=y
 #
 CONFIG_USING_LCKFB_TRANSPLANT_CODE=y
 CONFIG_USER_LED_ON=y
+
+#
+# use 1.69 inch st7789V SPI screen
+#
 # CONFIG_LCKFB_1_69_COLOR_SCREEN is not set
 
 #
-# use 3.7 inch st7796 SPI screen
+# use 3.5 inch st7796 SPI screen
 #
-CONFIG_LCKFB_3_7_COLOR_SCREEN=y
+CONFIG_LCKFB_3_5_COLOR_SCREEN=y
 
 #
 # RT-Thread online packages

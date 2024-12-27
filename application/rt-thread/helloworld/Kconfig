@@ -14,7 +14,7 @@ source "application/rt-thread/helloworld/user_led/Kconfig"
 # 1.69寸彩屏
 source "application/rt-thread/helloworld/user-bsp/1-69-color-screen/Kconfig"
 # 1.69寸彩屏
-source "application/rt-thread/helloworld/user-bsp/3-7-color-screen/Kconfig"
+source "application/rt-thread/helloworld/user-bsp/3-5-color-screen/Kconfig"
 
 endif # 结束
 
