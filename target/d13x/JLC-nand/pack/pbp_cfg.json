@@ -234,23 +234,15 @@
 			"jtag_only": "0", // 1: Boot code stop in PBP after DDR init and jtag init
 			"main": {
 				"jtag_id": "0",
-				"jtag_do_pin_cfg_reg": "0x187000A0", // PA8
-				"jtag_do_pin_cfg_val": "0x338",
-				"jtag_di_pin_cfg_reg": "0x187000A4", // PA9
-				"jtag_di_pin_cfg_val": "0x338",
 				"jtag_ms_pin_cfg_reg": "0x187000A8", // PA10
 				"jtag_ms_pin_cfg_val": "0x338",
 				"jtag_ck_pin_cfg_reg": "0x187000AC", // PA11
 				"jtag_ck_pin_cfg_val": "0x338",
 
-				// "jtag_do_pin_cfg_reg": "0x1870028C", // PC3
-				// "jtag_do_pin_cfg_val": "0x336",
-				// "jtag_di_pin_cfg_reg": "0x18700284", // PC1
-				// "jtag_di_pin_cfg_val": "0x336",
 				// "jtag_ms_pin_cfg_reg": "0x18700280", // PC0
-				// "jtag_ms_pin_cfg_val": "0x336",
+				// "jtag_ms_pin_cfg_val": "0x338",
 				// "jtag_ck_pin_cfg_reg": "0x18700294", // PC5
-				// "jtag_ck_pin_cfg_val": "0x336",
+				// "jtag_ck_pin_cfg_val": "0x338",
 			},
 		},
 	},
