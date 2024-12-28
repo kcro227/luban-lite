@@ -580,13 +580,14 @@ void LCD_ShowPicture(u16 x, u16 y, u16 length, u16 width, const u8 pic[])
 	u16 i, j;
 	u32 k = 0;
 	LCD_Address_Set(x, y, x + length - 1, y + width - 1);
-	for (i = 0; i < length; i++)
-	{
-		for (j = 0; j < width; j++)
-		{
-			LCD_WR_DATA8(pic[k * 2]);
-			LCD_WR_DATA8(pic[k * 2 + 1]);
-			k++;
-		}
-	}
+	// for (i = 0; i < length; i++)
+	// {
+	// 	for (j = 0; j < width; j++)
+	// 	{
+	// 		LCD_WR_DATA8(pic[k * 2]);
+	// 		LCD_WR_DATA8(pic[k * 2 + 1]);
+	// 		k++;
+	// 	}
+	// }
+	LCD_Writ_Data_Continue(length*width*2,pic);
 }

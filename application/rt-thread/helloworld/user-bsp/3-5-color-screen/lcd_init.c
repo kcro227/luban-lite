@@ -176,9 +176,13 @@ void LCD_WR_DATA(u16 dat)
 	;
 	if (ret != 2)
 	{
-		LOG_E("rt_qspi_transfer_message failed!! ");
+		LOG_E("rt_qspi_transfer_message failed!!");
 		LOG_I("length : %d  ret: %ld l - r : %ld", 2, ret, 2 - ret);
 	}
+
+	LCD_CS_Set();
+
+	rt_spi_release_bus((struct rt_spi_device *)lcd_dev);
 }
 
 /******************************************************************************

@@ -104,7 +104,7 @@ static int lcd_qspi_init(void)
     qspi_cfg.qspi_dl_width = 1; // QSPI 总线位宽，单线模式 1 位、双线模式 2 位，4 线模式 4 位
     qspi_cfg.parent.mode = RT_SPI_MASTER | RT_SPI_MODE_3 | RT_SPI_MSB;
     qspi_cfg.parent.data_width = 8;
-    qspi_cfg.parent.max_hz = 20 * 1000 * 1000; // 20M
+    qspi_cfg.parent.max_hz = 100 * 1000 * 1000; // 20M
     ret = rt_qspi_configure(g_qspi, &qspi_cfg);
     if (ret < 0)
     {
@@ -143,11 +143,11 @@ static void lcd_thread_entry(void *param)
         t+=0.11;
         LCD_ShowPicture(160,95,40,40,gImage_1);
         // LCD_Fill(0, 0, LCD_W, LCD_H, RED); // 清全屏为白色
-        // rt_thread_mdelay(500);
+        // rt_thread_mdelay(1000);
         // LCD_Fill(0, 0, LCD_W, LCD_H, GREEN); // 清全屏为白色
-        // rt_thread_mdelay(500);
+        // rt_thread_mdelay(1000);
         // LCD_Fill(0, 0, LCD_W, LCD_H, BLUE); // 清全屏为白色
-        rt_thread_mdelay(500);
+        // rt_thread_mdelay(1000);
     }
 }
 
