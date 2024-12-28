@@ -3,7 +3,7 @@
 #include "lcdfont.h"
 #include "string.h"
 
-uint16_t GRAM[LCD_W][LCD_H] = {0};
+uint8_t GRAM[LCD_W * LCD_H * 2 + 1] = {0};
 
 /******************************************************************************
 	  函数说明：在指定区域填充颜色
@@ -16,15 +16,16 @@ void LCD_Fill(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color)
 {
 
 	uint16_t i, j;
+
+	LCD_Address_Set(0, 0, LCD_W, LCD_H); // 设置显示范围
 	for (i = xsta; i < xend; i++)
 		for (j = ysta; j < yend; j++)
 		{
-			GRAM[i][j] = color;
+			GRAM[i * LCD_H * 2 + j * 2] = color >> 8;
+			GRAM[i * LCD_H * 2 + j * 2 + 1] = color ;
+			// LCD_WR_DATA(color);
 		}
-
-	LCD_Address_Set(0, 0, LCD_W, LCD_H); // 设置显示范围
-
-	LCD_Writ_Data_Continue((LCD_W * LCD_H * 2), (uint8_t *)GRAM);
+	LCD_Writ_Data_Continue(LCD_W * LCD_H * 2 , GRAM);
 }
 
 /******************************************************************************

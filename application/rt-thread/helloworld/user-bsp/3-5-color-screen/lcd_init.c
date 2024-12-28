@@ -83,7 +83,7 @@ void LCD_Writ_Bus(u8 dat)
 	  入口数据：dat  要写入的串行数据 lenth 发送数据的长度
 	  返回值：  无
 ******************************************************************************/
-void LCD_Writ_Data_Continue(uint32_t lenth,uint8_t *dat)
+void LCD_Writ_Data_Continue(uint32_t length, uint8_t *dat)
 {
 	struct rt_qspi_message msg;
 
@@ -102,7 +102,7 @@ void LCD_Writ_Data_Continue(uint32_t lenth,uint8_t *dat)
 	// 传输一条消息，开始发送数据时片选选中，函数返回时释放片选。
 	msg.parent.send_buf = dat;	   /* 发送缓冲区指针 */
 	msg.parent.recv_buf = RT_NULL; /* 接收缓冲区指针 */
-	msg.parent.length = lenth;		   /* 发送 / 接收 数据字节数 */
+	msg.parent.length = length;	   /* 发送 / 接收 数据字节数 */
 	msg.parent.next = RT_NULL;	   /* 指向继续发送的下一条消息的指针 */
 	msg.parent.cs_take = 1;		   /* 片选选中 */
 	msg.parent.cs_release = 1;	   /* 释放片选 */
@@ -113,10 +113,10 @@ void LCD_Writ_Data_Continue(uint32_t lenth,uint8_t *dat)
 
 	int ret = rt_qspi_transfer_message(lcd_dev, &msg);
 	;
-	if (ret != RT_NULL)
+	if (ret != length)
 	{
-		LOG_E("rt_qspi_transfer_message failed!! %x",ret);
-		LOG_I("mes l : %ld",lenth);
+		LOG_E("rt_qspi_transfer_message failed!! ");
+		LOG_I("length : %d  ret: %ld l - r : %ld", length, ret, length - ret);
 	}
 
 	LCD_CS_Set();
@@ -141,8 +141,44 @@ void LCD_WR_DATA8(u8 dat)
 ******************************************************************************/
 void LCD_WR_DATA(u16 dat)
 {
-	LCD_Writ_Bus(dat >> 8);
-	LCD_Writ_Bus(dat);
+	// LCD_Writ_Bus(dat >> 8);
+	// LCD_Writ_Bus(dat);
+	uint8_t data[2];
+	data[0] = dat >> 8;
+	data[1] = dat;
+	struct rt_qspi_message msg;
+
+	rt_memset(&msg, 0, sizeof(msg));
+
+	msg.instruction.content = 0;	/* 指令内容 */
+	msg.instruction.qspi_lines = 0; /* 指令模式，单线模式 1 位、双线模式 2 位，4 线模式 4 位 */
+
+	msg.alternate_bytes.content = 0;	/* 地址/交替字节 内容 */
+	msg.alternate_bytes.size = 0;		/* 地址/交替字节 长度 */
+	msg.alternate_bytes.qspi_lines = 0; /* 地址/交替字节 模式，单线模式 1 位、双线模式 2 位，4 线模式 4 位 */
+
+	msg.dummy_cycles = 0;	 /* 空指令周期阶段 */
+	msg.qspi_data_lines = 1; /*  QSPI 总线位宽 */
+
+	// 传输一条消息，开始发送数据时片选选中，函数返回时释放片选。
+	msg.parent.send_buf = data;	   /* 发送缓冲区指针 */
+	msg.parent.recv_buf = RT_NULL; /* 接收缓冲区指针 */
+	msg.parent.length = 2;		   /* 发送 / 接收 数据字节数 */
+	msg.parent.next = RT_NULL;	   /* 指向继续发送的下一条消息的指针 */
+	msg.parent.cs_take = 1;		   /* 片选选中 */
+	msg.parent.cs_release = 1;	   /* 释放片选 */
+
+	rt_spi_take_bus((struct rt_spi_device *)lcd_dev);
+
+	LCD_CS_Clr();
+
+	int ret = rt_qspi_transfer_message(lcd_dev, &msg);
+	;
+	if (ret != 2)
+	{
+		LOG_E("rt_qspi_transfer_message failed!! ");
+		LOG_I("length : %d  ret: %ld l - r : %ld", 2, ret, 2 - ret);
+	}
 }
 
 /******************************************************************************
@@ -167,44 +203,44 @@ void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2)
 {
 	// if (USE_HORIZONTAL == 0)
 	// {
-		LCD_WR_REG(0x2a); // 列地址设置
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b); // 行地址设置
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c); // 储存器写
-	// }
-	// else if (USE_HORIZONTAL == 1)
-	// {
-	// 	LCD_WR_REG(0x2a); // 列地址设置
-	// 	LCD_WR_DATA(x1);
-	// 	LCD_WR_DATA(x2);
-	// 	LCD_WR_REG(0x2b); // 行地址设置
-	// 	LCD_WR_DATA(y1 + 20);
-	// 	LCD_WR_DATA(y2 + 20);
-	// 	LCD_WR_REG(0x2c); // 储存器写
-	// }
-	// else if (USE_HORIZONTAL == 2)
-	// {
-	// 	LCD_WR_REG(0x2a); // 列地址设置
-	// 	LCD_WR_DATA(x1 + 20);
-	// 	LCD_WR_DATA(x2 + 20);
-	// 	LCD_WR_REG(0x2b); // 行地址设置
-	// 	LCD_WR_DATA(y1);
-	// 	LCD_WR_DATA(y2);
-	// 	LCD_WR_REG(0x2c); // 储存器写
-	// }
-	// else
-	// {
-	// 	LCD_WR_REG(0x2a); // 列地址设置
-	// 	LCD_WR_DATA(x1 + 20);
-	// 	LCD_WR_DATA(x2 + 20);
-	// 	LCD_WR_REG(0x2b); // 行地址设置
-	// 	LCD_WR_DATA(y1);
-	// 	LCD_WR_DATA(y2);
-	// 	LCD_WR_REG(0x2c); // 储存器写
-	// }
+	LCD_WR_REG(0x2a); // 列地址设置
+	LCD_WR_DATA(x1);
+	LCD_WR_DATA(x2);
+	LCD_WR_REG(0x2b); // 行地址设置
+	LCD_WR_DATA(y1);
+	LCD_WR_DATA(y2);
+	LCD_WR_REG(0x2c); // 储存器写
+					  // }
+					  // else if (USE_HORIZONTAL == 1)
+					  // {
+					  // 	LCD_WR_REG(0x2a); // 列地址设置
+					  // 	LCD_WR_DATA(x1);
+					  // 	LCD_WR_DATA(x2);
+					  // 	LCD_WR_REG(0x2b); // 行地址设置
+					  // 	LCD_WR_DATA(y1 + 20);
+					  // 	LCD_WR_DATA(y2 + 20);
+					  // 	LCD_WR_REG(0x2c); // 储存器写
+					  // }
+					  // else if (USE_HORIZONTAL == 2)
+					  // {
+					  // 	LCD_WR_REG(0x2a); // 列地址设置
+					  // 	LCD_WR_DATA(x1 + 20);
+					  // 	LCD_WR_DATA(x2 + 20);
+					  // 	LCD_WR_REG(0x2b); // 行地址设置
+					  // 	LCD_WR_DATA(y1);
+					  // 	LCD_WR_DATA(y2);
+					  // 	LCD_WR_REG(0x2c); // 储存器写
+					  // }
+					  // else
+					  // {
+					  // 	LCD_WR_REG(0x2a); // 列地址设置
+					  // 	LCD_WR_DATA(x1 + 20);
+					  // 	LCD_WR_DATA(x2 + 20);
+					  // 	LCD_WR_REG(0x2b); // 行地址设置
+					  // 	LCD_WR_DATA(y1);
+					  // 	LCD_WR_DATA(y2);
+					  // 	LCD_WR_REG(0x2c); // 储存器写
+					  // }
 }
 
 void LCD_Init(void)
