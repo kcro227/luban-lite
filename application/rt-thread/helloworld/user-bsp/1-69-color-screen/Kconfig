@@ -1,3 +1,4 @@
+comment "use 1.69 inch st7789V SPI screen"
 config LCKFB_1_69_COLOR_SCREEN
     bool "Use 1.69 inch color screen"
     select AIC_USING_QSPI3

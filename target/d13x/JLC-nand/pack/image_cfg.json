@@ -26,7 +26,7 @@
     "image": {
         "info": { // Header information about image
             "platform": "d13x",
-            "product": "demo88-nand",
+            "product": "JLC-nand",
             "version": "1.0.0",
             "media": {
                 "type": "spi-nand",

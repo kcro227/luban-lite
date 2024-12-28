@@ -35,6 +35,14 @@ static void user_led_thread_entry(void *param)
 
         rt_pin_write(user_led_pin, PIN_LOW); // 将LED引脚电平设置为低
         rt_thread_mdelay(100); // 线程延时100毫秒，让LED保持低电平一段时间
+
+        rt_pin_write(user_led_pin, PIN_HIGH); // 将LED引脚电平设置为高
+        rt_thread_mdelay(100); // 线程延时100毫秒，让LED保持高电平一段时间
+
+        rt_pin_write(user_led_pin, PIN_LOW); // 将LED引脚电平设置为低
+        rt_thread_mdelay(1700); // 线程延时100毫秒，让LED保持低电平一段时间
+
+
     }
 }
 

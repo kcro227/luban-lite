@@ -8,9 +8,9 @@ CPPPATH = [cwd]
 src = []
 
 
-if GetDepend('LCKFB_3_7_COLOR_SCREEN') and GetDepend('USING_LCKFB_TRANSPLANT_CODE'):
+if GetDepend('LCKFB_3_5_COLOR_SCREEN') and GetDepend('USING_LCKFB_TRANSPLANT_CODE'):
     src = Glob(os.path.join(cwd, '*.c'))
 
-group = DefineGroup('lckfb-3-7-color-screen', src, depend = [''], CPPPATH = CPPPATH)
+group = DefineGroup('lckfb-3-5-color-screen', src, depend = [''], CPPPATH = CPPPATH)
 
 Return('group')
